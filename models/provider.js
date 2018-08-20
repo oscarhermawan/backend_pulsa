@@ -1,12 +1,11 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+'use strict';
 
-var providerSchema = new Schema({
-  id:String,
-  kode_provider:String,
-  nama_provider:String
-})
-
-var Provider = mongoose.model('Provider', providerSchema)
-
-module.exports = Provider
+module.exports = (sequelize, DataTypes) => {
+  var Provider = sequelize.define('Provider', {
+    nama_provider: DataTypes.STRING
+  }, {});
+  Provider.associate = function(models) {
+    Provider.hasMany(models.Detail, {foreignKey: 'provider', sourceKey: 'nama_provider'});
+  };
+  return Provider
+};
